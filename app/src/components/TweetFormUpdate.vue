@@ -56,7 +56,7 @@ const update = async () => {
                     </router-link>
                 </time>
             </div>
-            
+
             <!-- Content field. -->
             <textarea
                 ref="textarea"

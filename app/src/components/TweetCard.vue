@@ -1,14 +1,12 @@
 <script setup>
 import { ref, toRefs, computed } from 'vue'
 import { useWorkspace } from '@/composables'
-import { deleteTweet } from '@/api'
 import TweetFormUpdate from './TweetFormUpdate'
-
+import { deleteTweet } from '@/api'
 const emit = defineEmits(['delete']);
 const props = defineProps({
     tweet: Object,
 })
-
 const { tweet } = toRefs(props)
 const { wallet } = useWorkspace()
 const isMyTweet = computed(() => wallet.value && wallet.value.publicKey.toBase58() === tweet.value.author.toBase58())
@@ -19,9 +17,7 @@ const authorRoute = computed(() => {
         return { name: 'Users', params: { author: tweet.value.author.toBase58() } }
     }
 })
-
 const isEditing = ref(false)
-
 const onDelete = async () => {
     await deleteTweet(tweet.value);
     emit('delete', tweet.value)
@@ -60,7 +56,7 @@ const onDelete = async () => {
             </div>
         </div>
         <p class="whitespace-pre-wrap break-all" v-text="tweet.content"></p>
-        <router-link v-if="tweet.topic" :to="{ name: 'Topics', params: { topic: tweet.topic } }" class="inline-block mt-2 text-pink-500 hover:underline break-all">
+        <router-link v-if="tweet.topic" :to="{ name: 'Topics', params: { topic: tweet.topic } }" class="inline-block mt-2 text-pink-500 hover:underline">
             #{{ tweet.topic }}
         </router-link>
     </div>

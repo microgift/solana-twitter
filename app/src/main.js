@@ -9,7 +9,6 @@ import relativeTime from 'dayjs/plugin/relativeTime'
 dayjs.extend(localizedFormat)
 dayjs.extend(relativeTime)
 
-// Routing.
 import { createRouter, createWebHashHistory } from 'vue-router'
 import routes from './routes'
 const router = createRouter({

@@ -3,9 +3,11 @@ import { useWorkspace } from '@/composables'
 import { Tweet } from '@/models'
 
 export const sendTweet = async (topic, content) => {
-    const { wallet, program } = useWorkspace()
-    const tweet = web3.Keypair.generate()
+    const { wallet, program } = useWorkspace();
 
+    const tweet = web3.Keypair.generate();
+
+    console.log(wallet.value);
     await program.value.rpc.sendTweet(topic, content, {
         accounts: {
             author: wallet.value.publicKey,
@@ -13,8 +15,11 @@ export const sendTweet = async (topic, content) => {
             systemProgram: web3.SystemProgram.programId,
         },
         signers: [tweet]
-    })
+    });
 
+    // 4. Fetch the newly created account from the blockchain.
     const tweetAccount = await program.value.account.tweet.fetch(tweet.publicKey)
+    
+    // 5. Wrap the fetched account in a Tweet model so our frontend can display it.
     return new Tweet(tweet.publicKey, tweetAccount)
 }
